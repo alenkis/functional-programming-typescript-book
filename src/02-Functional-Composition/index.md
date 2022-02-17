@@ -1,6 +1,6 @@
 # Functional composition
 
-Since functional composition is a central theme of functional programming, we will introduce two helpers that will make our lives easier, `pipe` and `flow`.
+Since functional composition is a central theme of functional programming, we will introduce helpers that will make our lives easier, `pipe`, `flow` and `apply`.
 
 ### Flow
 
@@ -51,4 +51,53 @@ Our previous example would look like this:
 import { pipe } from "fp-ts/lib/function";
 
 const result = pipe(1, increment, multBy10); // 20
+```
+
+### Currying
+
+As we've seen, `flow` returns a function that further expects it's argument, it's _curried_.
+
+Curried functions are functions which don't accept all of their arguments at once; instead they accept it one argument at a time, each time returning a new function. Some languages like Haskell and Elm don't even have a notion of multi-argument functions, _all_ functions are automatically curried. This provides an important benefit - _partial application_
+
+We'll often write functions that return new functions in the following style:
+
+```typescript
+const add3Numbers =
+  (a: number) =>
+  (b: number) =>
+  (c: number): number =>
+    a + b + c;
+
+// instead of
+const add3Numbers_ = (a: number, b: number, c: number): number => a + b + c;
+```
+
+### Apply
+
+We've seen an example where inside `pipe` every step produces a new value, which is then fed into the next function. This is very straightforward when we're dealing with single argument functions, but let's see an example how this would work when we introduce multi argument functions in the mix.
+
+```typescript
+const result = pipe(
+  1,
+  increment, // 2
+  multBy10, // 20
+  add3Numbers, // `a` (20) was partially applied
+  (fn) => fn(30), // `b` (30) was partially applied
+  (fn) => fn(100) // last argument, `c` (100) was applied
+); // 150
+```
+
+We can use `apply` to partially apply these values and reduce some boilerplate:
+
+```typescript
+import { apply } from "fp-ts/lib/function";
+
+const result = pipe(
+  1,
+  increment,
+  multBy10,
+  add3Numbers,
+  apply(30),
+  apply(100) // 150
+);
 ```

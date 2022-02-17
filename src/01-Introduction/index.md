@@ -43,7 +43,7 @@ If we substituted `add(2,3)` with value `5`, we would not evaluate `console.log`
 
 ### 4. Immutability
 
-There is no direct mutation and instead values, once created, are immutable, unchangeable. Instead, new values are created by applying functions to the old values.
+There is no direct mutation and instead values, once created, are unchangeable. Instead, new values are created by applying functions to the old values.
 
 ```typescript
 // mutable style
@@ -56,4 +56,4 @@ const value = 1;
 const newValue = increment(value);
 ```
 
-Unfortunately, Typescript being a superset of Javascript, doesn't natively support immutability so we have to be extra careful not to mutate values. Some other languages like [Haskell](https://mmhaskell.com/blog/2017/1/9/immutability-is-awesome) and [Clojure](https://clojure.org/reference/transients#_how_they_work) implement immutable data structures efficiently; Javascript will pay additional memory overhead which is well worth it in majority of situations for application development as it's easier to debug and reason about.
+Unfortunately, Typescript being a superset of Javascript, doesn't natively support immutability so we have to be extra careful not to mutate values. Some other languages like [Haskell](https://mmhaskell.com/blog/2017/1/9/immutability-is-awesome) and [Clojure](https://clojure.org/reference/transients#_how_they_work) implement immutable data structures efficiently; Javascript will pay additional memory overhead which is well worth it in majority of situations for application development as it makes the programs easier to debug and reason about.
