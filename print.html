@@ -1,0 +1,524 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Functional Programming in Typescript</title>
+        
+        <meta name="robots" content="noindex" />
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="custom.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="../index.html">Foreword</a></li><li class="expanded "><a href="chapter1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="expanded "><a href="chapter2.html"><strong aria-hidden="true">2.</strong> Functional composition</a></li><li class="expanded "><a href="chapter3.html"><strong aria-hidden="true">3.</strong> Option</a></li><li class="expanded "><a href="chapter4.html"><strong aria-hidden="true">4.</strong> Either</a></li><li class="expanded "><a href="chapter5.html"><strong aria-hidden="true">5.</strong> Functor</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Functional Programming in Typescript</h1>
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                            <a href="https://github.com/alenkis/functional-programming-typescript-book" title="Git repository" aria-label="Git repository">
+                                <i id="git-repository-button" class="fa fa-github"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#functional-programming-in-typescript" id="functional-programming-in-typescript">Functional Programming in Typescript</a></h1>
+<p>This book is a reference and a training material for using Typescript in a functional programming style. It mainly uses <a href="https://github.com/gcanti/fp-ts" title="fp-ts">fp-ts</a> library as it's the most mature typescript library for typed functional programming at the time of writing.</p>
+<h2><a class="header" href="#setup" id="setup">Setup</a></h2>
+<p>You can read this book <a href="../www.todo.com">here</a>, but if you also choose to solve excercises, it will be convenient to clone the repo:</p>
+<pre><code class="language-sh">git clone git@github.com:alenkis/functional-programming-typescript-book.git --branch no-solutions &amp;&amp; cd functional-programming-typescript-book
+</code></pre>
+<p>All the code is located in <code>/excercises</code> folder</p>
+<pre><code class="language-sh">cd /excercises
+</code></pre>
+<p>Install dependencies with:</p>
+<pre><code class="language-sh">yarn
+
+# or with npm
+npm install
+</code></pre>
+<p>For each chapter that contains excercises, you can solve them in TDD style by running tests with <code>yarn test:{chapterNumber}</code> and implementing the functions one by one.</p>
+<pre><code class="language-sh">yarn test:chapter3
+
+# or
+npm run test:chapter3
+</code></pre>
+<h2><a class="header" href="#status" id="status">Status</a></h2>
+<p>This book is being continuously written, so feel free to report any <a href="https://github.com/alenkis/functional-programming-typescript-book/issues">issues or suggestions</a></p>
+<h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
+<p>Functional programming has been significantly gaining popularity in the last decade, but it's actually a very old idea and has influenced the industry since it's begginings.</p>
+<p>It has it's roots in Alonzo Church's <em>lambda calculus</em>, developed in early 1930's, and LISP programming language developed in late 1950's, and has ever since influenced programming languages. Although this is an interesting topic, we won't bother too much with history and theory, and will instead focus on the practical benefits of adopting a functional programming style.</p>
+<h2><a class="header" href="#what-is-fp-style-anyway" id="what-is-fp-style-anyway">What is FP style, anyway?</a></h2>
+<p>There is no one true answer to this question, and most people agree this is more a question of a <em>spectrum</em>. Here are some characteristics that are usually found in programming languages that describe themselves as functional:</p>
+<h3><a class="header" href="#1-functional-composition" id="1-functional-composition">1. Functional composition</a></h3>
+<p>Functional composition has the emphasis on building programs by composing smaller functions. This allows us to create specialized functions that <em>do one thing and do it well</em> (<a href="https://en.wikipedia.org/wiki/Unix_philosophy#Do_One_Thing_and_Do_It_Well">UNIX philosophy</a>). This approach helps us create software that has less coupling (complexity) and is easier to maintain.</p>
+<h3><a class="header" href="#2-functions-as-first-class-citizens" id="2-functions-as-first-class-citizens">2. Functions as first-class citizens</a></h3>
+<p>We are able to create functions on the fly and pass them around as regular values.</p>
+<h3><a class="header" href="#3-referential-transparency" id="3-referential-transparency">3. Referential transparency</a></h3>
+<p>A <em>referentially transparent</em> expression is one that can be replaced with its result without changing the result of the program. It <em>always</em> returns the same value whenever it's evaluated with the same inputs. It makes reasoning about our programs easier and reduces complexity.</p>
+<p>The following expression is referentially transparent:</p>
+<pre><code class="language-typescript">const add = (x, y) =&gt; x + y;
+
+add(2, 3) === 5;
+// In any expression, add(2,3) can be freely substituted with the value 5
+// without changing the result of the program.
+</code></pre>
+<p>This expression, on the other hand, cannot be freely substituted with it's value because the evaluation of <code>add</code> also creates a <em>side effect</em>, logging in this case:</p>
+<pre><code class="language-typescript">const add = (x, y) =&gt; {
+  console.log(x, y);
+  return x + y;
+};
+</code></pre>
+<p>If we substituted <code>add(2,3)</code> with value <code>5</code>, we would not evaluate <code>console.log</code> and would thus change the behavior of the program. We call functions like these <em>impure</em>.</p>
+<h3><a class="header" href="#4-immutability" id="4-immutability">4. Immutability</a></h3>
+<p>There is no direct mutation and instead values, once created, are unchangeable. New values are created by applying functions to the old values.</p>
+<pre><code class="language-typescript">// mutable style
+let value = 1;
+value += 1;
+
+// immutable style
+const increment = (x) =&gt; x + 1;
+const value = 1;
+const newValue = increment(value);
+</code></pre>
+<p>Unfortunately, Typescript being a superset of Javascript, doesn't natively support immutability so we have to be extra careful not to mutate values. Some other languages like <a href="https://mmhaskell.com/blog/2017/1/9/immutability-is-awesome">Haskell</a> and <a href="https://clojure.org/reference/transients#_how_they_work">Clojure</a> implement immutable data structures efficiently; Javascript will pay additional memory overhead which is well worth it in majority of situations for application development as it makes the programs easier to debug and reason about.</p>
+<h1><a class="header" href="#functional-composition" id="functional-composition">Functional composition</a></h1>
+<p>Since functional composition is a central theme of functional programming, we will introduce some helpers that will make our lives easier: <code>flow</code>, <code>pipe</code> and <code>apply</code>.</p>
+<h3><a class="header" href="#flow" id="flow">Flow</a></h3>
+<p>It's useful to think about types when composing functions, for example:</p>
+<pre><code class="language-typescript">const multBy10 = (a: number): number =&gt; a * 10;
+const increment = (a: number): number =&gt; a + 1;
+</code></pre>
+<p>Both these functions take a <code>number</code> and return a <code>number</code>. Their type signatures are <code>number =&gt; number</code>. If we want to <em>compose</em> these two, we can think of &quot;plugging&quot; the ouput of the first to the input of the second function, like this:</p>
+<pre><code class="language-typescript">  A           B           C
+number  =&gt;  number  =&gt;  number
+^- increment -^
+              ^-- multBy10 --^
+</code></pre>
+<p>If we have a function <code>increment</code> (<code>A =&gt; B</code>), and a function <code>multBy10</code> (<code>B =&gt; C</code>), we can create a <em>new</em> function that would have a type signature <code>A =&gt; C</code></p>
+<pre><code class="language-typescript">import { flow } from &quot;fp-ts/lib/function&quot;;
+
+const composedFn = flow(increment, multBy10);
+composedFn(1); // 20
+</code></pre>
+<p>This is equivalent to:</p>
+<pre><code class="language-typescript">const result = multBy10(increment(1)); // 20
+</code></pre>
+<p>You will notice that the order is different. With <code>flow</code>, we can read from left to right, while with traditional approach we would have to read from the inside out.</p>
+<pre><code class="language-typescript">flow(a, b, c)(1) === c(b(a(1)));
+</code></pre>
+<h3><a class="header" href="#pipe" id="pipe">Pipe</a></h3>
+<p>Pipe is very similar to flow, the only difference is that the first value <code>pipe</code> takes is the value itself, which is then applied to a composition of an arbitrary number of functions.</p>
+<pre><code class="language-typescript">pipe(
+  value, // value
+  f1,    // f1(value)
+  f2,    // f2(f1(value))
+  f3,    // f3(f2(f1(value)))
+  ...,   // ...etc
+  fn
+)
+</code></pre>
+<p>Our previous example would look like this:</p>
+<pre><code class="language-typescript">import { pipe } from &quot;fp-ts/lib/function&quot;;
+
+const result = pipe(1, increment, multBy10); // 20
+</code></pre>
+<p>If we ever need to add an additional function, we just need to insert it in this &quot;pipeline&quot; of tranformations, compared to nested function calls where we'd need to mess with parentheses as well.</p>
+<h3><a class="header" href="#currying" id="currying">Currying</a></h3>
+<p>As we've seen, <code>flow</code> returns a function that further expects it's argument; it's <em>curried</em>.</p>
+<p>Curried functions are functions which don't accept all of their arguments at once, instead they accept it one argument at a time, each time returning a new function. Some languages like Haskell and Elm don't even have a notion of multi-argument functions, <em>all</em> functions are automatically curried. This provides an important benefit - <em>partial application</em></p>
+<p>We'll often write functions that return new functions in the following style:</p>
+<pre><code class="language-typescript">const add3Numbers =
+  (a: number) =&gt;
+  (b: number) =&gt;
+  (c: number): number =&gt;
+    a + b + c;
+
+// instead of
+const add3Numbers_ = (a: number, b: number, c: number): number =&gt; a + b + c;
+</code></pre>
+<h3><a class="header" href="#apply" id="apply">Apply</a></h3>
+<p>We've seen an example where inside <code>pipe</code> every step produces a new value, which is then fed into the next function. This is very straightforward when we're dealing with single argument functions, but let's see an example how this would work when we introduce multi argument functions in the mix.</p>
+<pre><code class="language-typescript">const result = pipe(
+  1,
+  increment, // 2
+  multBy10, // 20
+  add3Numbers, // first argument `a` (20) was partially applied
+  (fn) =&gt; fn(30), // second argument `b` (30) was partially applied
+  (fn) =&gt; fn(100) // last argument, `c` (100) was applied
+); // 150
+</code></pre>
+<p>We can use <code>apply</code> to partially apply these values and reduce some boilerplate:</p>
+<pre><code class="language-typescript">import { apply } from &quot;fp-ts/lib/function&quot;;
+
+const result = pipe(
+  1,
+  increment,
+  multBy10,
+  add3Numbers,
+  apply(30),
+  apply(100) // 150
+);
+</code></pre>
+<h1><a class="header" href="#option" id="option">Option</a></h1>
+<p>There is a common concept in programming that is often a source of many bugs, and that's a concept of a <em>missing</em> value. Many programming languages use <a href="https://www.infoq.com/presentations/Null%2DReferences%2DThe%2DBillion%2DDollar%2DMistake%2DTony%2DHoare/">null</a> to represent this state, and some like JavaScript also use <code>undefined</code>. In case of JavaScript, these 2 account for 8 of 10 <a href="https://www.rollbar.com/blog/blog/top%2D10%2Djavascript%2Derrors%2Dfrom%2D1000%2Dprojects%2Dand%2Dhow%2Dto%2Davoid%2Dthem">most common errors</a> found in production.</p>
+<!-- We'll look how deeper into functional programming patterns, specifically `Option` monad, that can help us control this behaviour in a more safe, predictable and maintainable way.  -->
+<h2><a class="header" href="#nullable-types" id="nullable-types">Nullable types</a></h2>
+<p>We can get some type safety by returning nullable types and using optional chaining operator. If an expression can return some type <code>A</code> or <code>null</code>, we can ensure that the return type of the expression is <code>A | null</code> thus forcing us to check and narrow down the type before use.</p>
+<pre><code class="language-typescript">const result = Math.random() &gt; 0.5 ? { nested: { value: 1 } } : null
+// { nested: { value: number } } | null
+
+const checkedValue = result?.nested?.value
+// number | undefined
+
+if (checkedValue) {
+  // Only here have we finally narrowed our type to `number`
+  ...
+}
+</code></pre>
+<p>We can even create a generic type helper for this approach, <code>Nullable</code></p>
+<pre><code class="language-typescript">type Nullable&lt;T&gt; = T | null;
+</code></pre>
+<p>There are a couple of problems with this approach:</p>
+<ul>
+<li>we are forced to use <code>if</code> statements which are brittle, poorly legible and can lead to some complex states</li>
+<li>it's harder to compose functions</li>
+</ul>
+<p>What do I mean by harder function composition? Consider the following example of functions (whose implementation doesn't matter, but their types do):</p>
+<pre><code class="language-typescript">declare function getName(id: string): Nullable&lt;string&gt;;
+declare function formatName(name: string): string;
+declare function countLetters(name: string): number;
+</code></pre>
+<p><code>getName</code> can possibly fail, and so we return a <code>Nullable&lt;string&gt;</code> (<code>string</code> | <code>null</code>). The problem arises if we try to combine this functions with others like this:</p>
+<pre><code class="language-typescript">pipe(&quot;id&quot;, getName, formatName, countLetters);
+//                  ^-- type `null` is not assignable to type `string`
+</code></pre>
+<p>We get an error <em>type <code>null</code> is not assignable to type <code>string</code></em>. We now have to introduce manual checking with <code>if</code> statements which leads to decreased readability. If the functions are used a lot, in order to avoid this boilerplate we might be tempted to handle this check inside <code>formatName</code> function and decide to rewrite it as:</p>
+<pre><code class="language-typescript">declare function formatName(name: Nullable&lt;string&gt;): Nullable&lt;string&gt;;
+</code></pre>
+<p>Of course, now we've created another problem because we have to do the same to <code>countLetters</code> and any other function in this chain, making our code a lot less type safe and we've also increased function coupling. Type signature of <code>formatName</code> shouldn't reflect possibly missing data, that's the concern of <code>getName</code> function.</p>
+<h2><a class="header" href="#option-1" id="option-1">Option</a></h2>
+<p>We can take a slightly different approach and create a container for an optional value using discriminated unions:</p>
+<pre><code class="language-typescript">type None = {
+  readonly _tag: &quot;None&quot;;
+};
+
+type Some&lt;A&gt; = {
+  readonly _tag: &quot;Some&quot;;
+  readonly value: A;
+};
+
+type Option&lt;A&gt; = None | Some&lt;A&gt;;
+</code></pre>
+<p>Even though this looks very similar to a plain union like we've used with <code>Nullable</code>, this approach will allow us to build some very powerful abstractions that will allow us to reason about our code on a higher level.</p>
+<p>We also need a way how to create <code>Option</code>s and check which variant we have, <code>Some</code> or <code>None</code>.</p>
+<pre><code class="language-typescript">// constructors
+const some = &lt;A&gt;(a: A): Option&lt;A&gt; =&gt; ({ _tag: &quot;Some&quot;, value: a });
+const none: Option&lt;never&gt; = { _tag: &quot;None&quot; };
+
+// guards
+const isSome = &lt;A&gt;(fa: Option&lt;A&gt;): fa is Some&lt;A&gt; =&gt; fa._tag === &quot;Some&quot;;
+const isNone = &lt;A&gt;(fa: Option&lt;A&gt;): fa is None =&gt; fa._tag === &quot;None&quot;;
+</code></pre>
+<p>So, now we can create and check options, but it would be pretty tedious to write code like this directly. Instead we can use these to create more elaborate constructors like <code>fromPredicate</code> and use these guards to create a pattern matching function <code>match</code></p>
+<pre><code class="language-typescript">// Constructs a Some instance if predicate returns true, otherwise returns None
+const fromPredicate =
+  &lt;A&gt;(predicate: (a: A) =&gt; boolean) =&gt;
+  (value: A): Option&lt;A&gt; =&gt;
+    predicate(value) ? some(value) : none;
+
+// Evaluates appropriate handler based on whether an Option is Some or None
+const match =
+  &lt;B, A&gt;(onNone: () =&gt; B, onSome: (a: A) =&gt; B) =&gt;
+  (ma: Option&lt;A&gt;) =&gt;
+    isNone(ma) ? onNone() : onSome(ma.value);
+</code></pre>
+<p>We can create an option using <code>fromPredicate</code> like this:</p>
+<pre><code class="language-typescript">const optionalNumber = pipe(
+  Math.random(),
+  fromPredicate((n) =&gt; n &gt; 0.5)
+); // Option&lt;number&gt;
+</code></pre>
+<p>The above code will create <code>Some</code> instance <em>only</em> if the predicate functions returns true for a given input. Otherwise, it will return <code>None</code>.</p>
+<p>We can use <code>match</code> to pattern match against these two possibilities:</p>
+<pre><code class="language-typescript">const result = pipe(
+  Math.random(),
+  fromPredicate((n) =&gt; n &gt; 0.5),
+  match(
+    // None handler
+    () =&gt; &quot;Number was lower than 0.5&quot;,
+    // Some(n) handler
+    (n) =&gt; `Number value: ${n}`
+  )
+); // string
+</code></pre>
+<p>We cannot decide <em>not</em> to handle both cases, that would be a type error.</p>
+<p>Sometimes we just want to handle extract the value in case of <code>Some</code>, and handle the <code>None</code> case. We could do this with <code>match</code>, but we can also use <code>getOrElse</code> and <code>getOrElseW</code></p>
+<pre><code class="language-typescript">pipe(
+  someOption,
+  match(
+    () =&gt; 1 // return default value in case of `None`
+    n =&gt; n  // or return n in case of `Some`
+  )
+)
+</code></pre>
+<pre><code class="language-typescript">// we can simplify above by using `getOrElse`
+import * as O from &quot;fp-ts/Option&quot;;
+
+pipe(
+  someOption,
+  O.getOrElse(() =&gt; 1)
+);
+</code></pre>
+<p>Both <code>match</code> and <code>getOrElse</code> need to return the same type from both branches, so that the resulting value is a single type. We can also <em>widen</em> the result by using <code>getOrElseW</code>. In <code>fp-ts</code>, <code>W</code> suffix means <em>widen</em> and functions that end with <code>W</code> aggregate types from different branches into a type union</p>
+<pre><code class="language-typescript">const result = pipe(
+  O.some(1),
+  O.getOrElseW(() =&gt; &quot;hello&quot;)
+); // number | string
+</code></pre>
+<p>There are a couple of more useful helpers:</p>
+<pre><code class="language-typescript">import * as O from &quot;fp-ts/Option&quot;;
+
+O.fromNullable(null); // O.None
+O.fromNullable(undefined); // O.None
+O.fromNullable(&quot;&quot;); // O.Some(&quot;&quot;)
+
+O.toNullable(O.some(&quot;hello&quot;)) // &quot;hello&quot;
+O.toNullable(O.none)) // null
+
+O.toUndefined(O.some(&quot;hello&quot;)) // &quot;hello&quot;
+O.toUndefined(O.none)) // undefined
+</code></pre>
+<p>So far, we've managed to create a specialized container, create some helper constructors and guards and a pattern matching tool. We will now build on this by making our <code>Option</code> a <code>Functor</code>!</p>
+<h1><a class="header" href="#excercises" id="excercises">Excercises</a></h1>
+<ol>
+<li>Create a function <code>isValidName</code> which when supplied with a name of type <code>string</code>, returns a <code>Some</code> instance only when <code>name</code> is longer than 2 characters, otherwise it returns <code>None</code></li>
+<li>Create a function <code>greetUser</code> that, using previously defined function <code>isValidName</code>, checks whether a name is valid, if it is returns <code>Welcome, ${name}, you have a great name!</code>, otherwise returns <code>Hey there, isn't your name a bit short?</code></li>
+</ol>
+<h1><a class="header" href="#either" id="either">Either</a></h1>
+<h1><a class="header" href="#functor" id="functor">Functor</a></h1>
+<h2><a class="header" href="#option-2" id="option-2">Option</a></h2>
+<p>Scary sounding word but it only means that we are able to apply a function to a value inside our <code>Option</code>. You are already familiar with some data structures that are also functors, <code>Array</code> for example, so it's no surprise that we need a function called <code>map</code> in order make our <code>Option</code> a functor</p>
+<pre><code class="language-typescript">const map =
+  &lt;A, B&gt;(f: (a: A) =&gt; B) =&gt;
+  (fa: Option&lt;A&gt;): Option&lt;B&gt; =&gt;
+    isNone(fa) ? none : some(f(fa.value));
+</code></pre>
+<p><code>map</code> takes two arguments (curried)</p>
+<ul>
+<li>a function <code>f</code> that transforms some value (<code>A =&gt; B</code>)</li>
+<li>a Functor <code>fa</code> (&quot;Functor of type A&quot;), in our case <code>Option&lt;A&gt;</code></li>
+</ul>
+<p>if <code>fa</code>, our <code>Option</code> we're operating on, is <code>None</code>, then the result is also a <code>None</code> - we've essentially bypassed this operation and tranformation was not performed. If our <code>Option</code> is a <code>Some</code> instance, then we apply our function to it's underlying value. This gives us an amazing ability to chain operations that can produce <code>None</code>, without worrying about manual value checking.</p>
+<p>Let's implement our fictional example with name formatting using <code>Option</code> and <code>map</code></p>
+<pre><code class="language-typescript">declare function getName(id: string): Option&lt;string&gt;;
+declare function formatName(name: string): string;
+declare function countLetters(name: string): number;
+
+const result = pipe(
+  &quot;id&quot;,
+  getName, // &lt;-- returns an Option&lt;string&gt;
+  map(formatName), // &lt;-- returns an Option&lt;string&gt;
+  map(countLetters), // &lt;-- returns an Option&lt;number&gt;
+  match(
+    () =&gt; 0, // if the whole thing returned `None`
+    (value) =&gt; value
+  )
+); // number
+</code></pre>
+<p>We have used pure functions <code>formatName</code> and <code>countLetters</code> inside of a context of potentially missing value and we were able to decouple our functions. <code>map</code> lets us gradually build up the result while staying inside our <code>Option</code> container, all the while never needing to worry about a possibly missing state.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
