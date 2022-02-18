@@ -1,6 +1,6 @@
 # Functional composition
 
-Since functional composition is a central theme of functional programming, we will introduce helpers that will make our lives easier, `pipe`, `flow` and `apply`.
+Since functional composition is a central theme of functional programming, we will introduce some helpers that will make our lives easier: `flow`, `pipe` and `apply`.
 
 ### Flow
 
@@ -11,12 +11,12 @@ const multBy10 = (a: number): number => a * 10;
 const increment = (a: number): number => a + 1;
 ```
 
-Both these functions take a `number` and return a `number`. Their type signatures are `number => number`.
+Both these functions take a `number` and return a `number`. Their type signatures are `number => number`. If we want to _compose_ these two, we can think of "plugging" the ouput of the first to the input of the second function, like this:
 
 ```typescript
   A           B           C
 number  =>  number  =>  number
-^_ increment _^
+^- increment -^
               ^-- multBy10 --^
 ```
 
@@ -35,7 +35,7 @@ This is equivalent to:
 const result = multBy10(increment(1)); // 20
 ```
 
-You will notice that the order is different. With `flow`, we can read from left to right, while with traditional approach we have to read from inside out
+You will notice that the order is different. With `flow`, we can read from left to right, while with traditional approach we would have to read from the inside out.
 
 ```typescript
 flow(a, b, c)(1) === c(b(a(1)));
@@ -43,7 +43,18 @@ flow(a, b, c)(1) === c(b(a(1)));
 
 ### Pipe
 
-Pipe is very similar to flow, the only difference is that the first value `pipe` takes is the value itself which it then _threads_ through an arbitrary number of functions.
+Pipe is very similar to flow, the only difference is that the first value `pipe` takes is the value itself, which is then applied to a composition of an arbitrary number of functions.
+
+```typescript
+pipe(
+  value, // value
+  f1,    // f1(value)
+  f2,    // f2(f1(value))
+  f3,    // f3(f2(f1(value)))
+  ...,   // ...etc
+  fn
+)
+```
 
 Our previous example would look like this:
 
@@ -55,9 +66,9 @@ const result = pipe(1, increment, multBy10); // 20
 
 ### Currying
 
-As we've seen, `flow` returns a function that further expects it's argument, it's _curried_.
+As we've seen, `flow` returns a function that further expects it's argument; it's _curried_.
 
-Curried functions are functions which don't accept all of their arguments at once; instead they accept it one argument at a time, each time returning a new function. Some languages like Haskell and Elm don't even have a notion of multi-argument functions, _all_ functions are automatically curried. This provides an important benefit - _partial application_
+Curried functions are functions which don't accept all of their arguments at once, instead they accept it one argument at a time, each time returning a new function. Some languages like Haskell and Elm don't even have a notion of multi-argument functions, _all_ functions are automatically curried. This provides an important benefit - _partial application_
 
 We'll often write functions that return new functions in the following style:
 
@@ -81,8 +92,8 @@ const result = pipe(
   1,
   increment, // 2
   multBy10, // 20
-  add3Numbers, // `a` (20) was partially applied
-  (fn) => fn(30), // `b` (30) was partially applied
+  add3Numbers, // first argument `a` (20) was partially applied
+  (fn) => fn(30), // second argument `b` (30) was partially applied
   (fn) => fn(100) // last argument, `c` (100) was applied
 ); // 150
 ```

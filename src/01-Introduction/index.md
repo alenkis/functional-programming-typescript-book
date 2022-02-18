@@ -39,11 +39,11 @@ const add = (x, y) => {
 };
 ```
 
-If we substituted `add(2,3)` with value `5`, we would not evaluate `console.log` and would thus change the behavior of the program. We also call these functions _impure_.
+If we substituted `add(2,3)` with value `5`, we would not evaluate `console.log` and would thus change the behavior of the program. We call functions like these _impure_.
 
 ### 4. Immutability
 
-There is no direct mutation and instead values, once created, are unchangeable. Instead, new values are created by applying functions to the old values.
+There is no direct mutation and instead values, once created, are unchangeable. New values are created by applying functions to the old values.
 
 ```typescript
 // mutable style
