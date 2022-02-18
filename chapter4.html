@@ -170,6 +170,39 @@ const bar = (): number =&gt; foo() + 3;
 </code></pre>
 <pre><code class="language-haskell">foo x y = x + y
 </code></pre>
+<pre><code>type None = {
+  readonly _tag: &quot;None&quot;;
+};
+
+type Some&lt;A&gt; = {
+  readonly _tag: &quot;Some&quot;;
+  readonly value: A;
+};
+
+type Option&lt;A&gt; = None | Some&lt;A&gt;;
+</code></pre>
+<pre><code class="language-js">type None = {
+  readonly _tag: &quot;None&quot;;
+};
+
+type Some&lt;A&gt; = {
+  readonly _tag: &quot;Some&quot;;
+  readonly value: A;
+};
+
+type Option&lt;A&gt; = None | Some&lt;A&gt;;
+</code></pre>
+<pre><code class="language-ts">type None = {
+  readonly _tag: &quot;None&quot;;
+};
+
+type Some&lt;A&gt; = {
+  readonly _tag: &quot;Some&quot;;
+  readonly value: A;
+};
+
+type Option&lt;A&gt; = None | Some&lt;A&gt;;
+</code></pre>
 
                     </main>
 

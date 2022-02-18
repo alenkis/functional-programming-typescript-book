@@ -445,6 +445,39 @@ const bar = (): number =&gt; foo() + 3;
 </code></pre>
 <pre><code class="language-haskell">foo x y = x + y
 </code></pre>
+<pre><code>type None = {
+  readonly _tag: &quot;None&quot;;
+};
+
+type Some&lt;A&gt; = {
+  readonly _tag: &quot;Some&quot;;
+  readonly value: A;
+};
+
+type Option&lt;A&gt; = None | Some&lt;A&gt;;
+</code></pre>
+<pre><code class="language-js">type None = {
+  readonly _tag: &quot;None&quot;;
+};
+
+type Some&lt;A&gt; = {
+  readonly _tag: &quot;Some&quot;;
+  readonly value: A;
+};
+
+type Option&lt;A&gt; = None | Some&lt;A&gt;;
+</code></pre>
+<pre><code class="language-ts">type None = {
+  readonly _tag: &quot;None&quot;;
+};
+
+type Some&lt;A&gt; = {
+  readonly _tag: &quot;Some&quot;;
+  readonly value: A;
+};
+
+type Option&lt;A&gt; = None | Some&lt;A&gt;;
+</code></pre>
 <h1><a class="header" href="#functor" id="functor">Functor</a></h1>
 <h2><a class="header" href="#option-2" id="option-2">Option</a></h2>
 <p>Scary sounding word but it only means that we are able to apply a function to a value inside our <code>Option</code>. You are already familiar with some data structures that are also functors, <code>Array</code> for example, so it's no surprise that we need a function called <code>map</code> in order make our <code>Option</code> a functor</p>
