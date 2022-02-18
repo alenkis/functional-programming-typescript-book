@@ -178,3 +178,7 @@ O.toUndefined(O.none)) // undefined
 ```
 
 So far, we've managed to create a specialized container, create some helper constructors and guards and a pattern matching tool. We will now build on this by making our `Option` a `Functor`!
+
+# Excercises
+
+1. Create a function `isValidName` which when supplied with a name of type `string`, returns a `Some` instance only when `name` is longer than 5 characters, otherwise it returns `None`

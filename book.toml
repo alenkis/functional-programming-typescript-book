@@ -6,3 +6,4 @@ src = "content"
 title = "Functional Programming in Typescript"
 [output.html]
 git-repository-url = "https://github.com/alenkis/functional-programming-typescript-book"
+additional-css = ["custom.css"]
