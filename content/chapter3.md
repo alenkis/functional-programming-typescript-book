@@ -181,4 +181,5 @@ So far, we've managed to create a specialized container, create some helper cons
 
 # Excercises
 
-1. Create a function `isValidName` which when supplied with a name of type `string`, returns a `Some` instance only when `name` is longer than 5 characters, otherwise it returns `None`
+1. Create a function `isValidName` which when supplied with a name of type `string`, returns a `Some` instance only when `name` is longer than 2 characters, otherwise it returns `None`
+2. Create a function `greetUser` that, using previously defined function `isValidName`, checks whether a name is valid, if it is returns `Welcome, ${name}, you have a great name!`, otherwise returns `Hey there, isn't your name a bit short?`
