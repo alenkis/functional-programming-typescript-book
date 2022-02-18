@@ -64,6 +64,8 @@ import { pipe } from "fp-ts/lib/function";
 const result = pipe(1, increment, multBy10); // 20
 ```
 
+If we ever need to add an additional function, we just need to insert it in this "pipeline" of tranformations, compared to nested function calls where we'd need to mess with parentheses as well.
+
 ### Currying
 
 As we've seen, `flow` returns a function that further expects it's argument; it's _curried_.

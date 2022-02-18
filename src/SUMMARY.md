@@ -4,4 +4,12 @@
 
 - [Introduction](./01-Introduction/index.md)
 - [Functional composition](./02-Functional-Composition/index.md)
-- [Option](./02-Option/index.md)
+
+# Algebraic data types
+
+- [Option](./03-Option/index.md)
+- [Either](./04-Either/index.md)
+
+# Typeclasses
+
+- [Functor](./05-Functor/index.md)
