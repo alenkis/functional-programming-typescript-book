@@ -4,35 +4,28 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Functional Programming in Typescript</title>
-        
         <meta name="robots" content="noindex" />
-        
-
+        <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
         <link rel="stylesheet" href="css/print.css" media="print">
-
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
-
+        <link rel="stylesheet" href="fonts/fonts.css">
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
-
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -82,8 +75,8 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="index.html">Foreword</a></li><li class="expanded affix "><a href="FOO.html">Introduction</a></li><li class="expanded "><a href="chapter2.html"><strong aria-hidden="true">1.</strong> Functional composition</a></li><li class="expanded "><a href="chapter3.html"><strong aria-hidden="true">2.</strong> Option</a></li><li class="expanded "><a href="chapter4.html"><strong aria-hidden="true">3.</strong> Either</a></li><li class="expanded "><a href="chapter5.html"><strong aria-hidden="true">4.</strong> Functor</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Foreword</a></li><li class="chapter-item expanded affix "><a href="FOO.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter2.html"><strong aria-hidden="true">1.</strong> Functional composition</a></li><li class="chapter-item expanded affix "><li class="part-title">Algebraic data types</li><li class="chapter-item expanded "><a href="chapter3.html"><strong aria-hidden="true">2.</strong> Option</a></li><li class="chapter-item expanded "><a href="chapter4.html"><strong aria-hidden="true">3.</strong> Either</a></li><li class="chapter-item expanded affix "><li class="part-title">Typeclasses</li><li class="chapter-item expanded "><a href="chapter5.html"><strong aria-hidden="true">4.</strong> Functor</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -91,49 +84,42 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
 
-                        <h1 class="menu-title">Functional Programming in Typescript</h1>
+                    <h1 class="menu-title">Functional Programming in Typescript</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                            <a href="https://github.com/alenkis/functional-programming-typescript-book" title="Git repository" aria-label="Git repository">
-                                <i id="git-repository-button" class="fa fa-github"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/alenkis/functional-programming-typescript-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -141,8 +127,6 @@
                         </ul>
                     </div>
                 </div>
-                
-
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -154,9 +138,9 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#functional-programming-in-typescript" id="functional-programming-in-typescript">Functional Programming in Typescript</a></h1>
+                        <h1 id="functional-programming-in-typescript"><a class="header" href="#functional-programming-in-typescript">Functional Programming in Typescript</a></h1>
 <p>This book is a reference and a training material for using Typescript in a functional programming style. It mainly uses <a href="https://github.com/gcanti/fp-ts" title="fp-ts">fp-ts</a> library as it's the most mature typescript library for typed functional programming at the time of writing.</p>
-<h2><a class="header" href="#setup" id="setup">Setup</a></h2>
+<h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
 <p>You can read this book <a href="https://alenkis.github.io/functional-programming-typescript-book">here</a>, but if you also choose to solve excercises, it will be convenient to clone the repo:</p>
 <pre><code class="language-sh">git clone git@github.com:alenkis/functional-programming-typescript-book.git --branch no-solutions &amp;&amp; cd functional-programming-typescript-book
 </code></pre>
@@ -175,18 +159,18 @@ npm install
 # or
 npm run test:chapter3
 </code></pre>
-<h2><a class="header" href="#status" id="status">Status</a></h2>
+<h2 id="status"><a class="header" href="#status">Status</a></h2>
 <p>This book is being continuously written, so feel free to report any <a href="https://github.com/alenkis/functional-programming-typescript-book/issues">issues or suggestions</a></p>
-<h1><a class="header" href="#foo" id="foo">Foo</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="foo"><a class="header" href="#foo">Foo</a></h1>
 <p>Functional programming has been significantly gaining popularity in the last decade, but it's actually a very old idea and has influenced the industry since it's begginings.</p>
 <p>It has it's roots in Alonzo Church's <em>lambda calculus</em>, developed in early 1930's, and LISP programming language developed in late 1950's, and has ever since influenced programming languages. Although this is an interesting topic, we won't bother too much with history and theory, and will instead focus on the practical benefits of adopting a functional programming style.</p>
-<h2><a class="header" href="#what-is-fp-style-anyway" id="what-is-fp-style-anyway">What is FP style, anyway?</a></h2>
+<h2 id="what-is-fp-style-anyway"><a class="header" href="#what-is-fp-style-anyway">What is FP style, anyway?</a></h2>
 <p>There is no one true answer to this question, and most people agree this is more a question of a <em>spectrum</em>. Here are some characteristics that are usually found in programming languages that describe themselves as functional:</p>
-<h3><a class="header" href="#1-functional-composition" id="1-functional-composition">1. Functional composition</a></h3>
+<h3 id="1-functional-composition"><a class="header" href="#1-functional-composition">1. Functional composition</a></h3>
 <p>Functional composition has the emphasis on building programs by composing smaller functions. This allows us to create specialized functions that <em>do one thing and do it well</em> (<a href="https://en.wikipedia.org/wiki/Unix_philosophy#Do_One_Thing_and_Do_It_Well">UNIX philosophy</a>). This approach helps us create software that has less coupling (complexity) and is easier to maintain.</p>
-<h3><a class="header" href="#2-functions-as-first-class-citizens" id="2-functions-as-first-class-citizens">2. Functions as first-class citizens</a></h3>
+<h3 id="2-functions-as-first-class-citizens"><a class="header" href="#2-functions-as-first-class-citizens">2. Functions as first-class citizens</a></h3>
 <p>We are able to create functions on the fly and pass them around as regular values.</p>
-<h3><a class="header" href="#3-referential-transparency" id="3-referential-transparency">3. Referential transparency</a></h3>
+<h3 id="3-referential-transparency"><a class="header" href="#3-referential-transparency">3. Referential transparency</a></h3>
 <p>A <em>referentially transparent</em> expression is one that can be replaced with its result without changing the result of the program. It <em>always</em> returns the same value whenever it's evaluated with the same inputs. It makes reasoning about our programs easier and reduces complexity.</p>
 <p>The following expression is referentially transparent:</p>
 <pre><code class="language-typescript">const add = (x, y) =&gt; x + y;
@@ -202,7 +186,7 @@ add(2, 3) === 5;
 };
 </code></pre>
 <p>If we substituted <code>add(2,3)</code> with value <code>5</code>, we would not evaluate <code>console.log</code> and would thus change the behavior of the program. We call functions like these <em>impure</em>.</p>
-<h3><a class="header" href="#4-immutability" id="4-immutability">4. Immutability</a></h3>
+<h3 id="4-immutability"><a class="header" href="#4-immutability">4. Immutability</a></h3>
 <p>There is no direct mutation and instead values, once created, are unchangeable. New values are created by applying functions to the old values.</p>
 <pre><code class="language-typescript">// mutable style
 let value = 1;
@@ -214,9 +198,9 @@ const value = 1;
 const newValue = increment(value);
 </code></pre>
 <p>Unfortunately, Typescript being a superset of Javascript, doesn't natively support immutability so we have to be extra careful not to mutate values. Some other languages like <a href="https://mmhaskell.com/blog/2017/1/9/immutability-is-awesome">Haskell</a> and <a href="https://clojure.org/reference/transients#_how_they_work">Clojure</a> implement immutable data structures efficiently; Javascript will pay additional memory overhead which is well worth it in majority of situations for application development as it makes the programs easier to debug and reason about.</p>
-<h1><a class="header" href="#functional-composition" id="functional-composition">Functional composition</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="functional-composition"><a class="header" href="#functional-composition">Functional composition</a></h1>
 <p>Since functional composition is a central theme of functional programming, we will introduce some helpers that will make our lives easier: <code>flow</code>, <code>pipe</code> and <code>apply</code>.</p>
-<h3><a class="header" href="#flow" id="flow">Flow</a></h3>
+<h3 id="flow"><a class="header" href="#flow">Flow</a></h3>
 <p>It's useful to think about types when composing functions, for example:</p>
 <pre><code class="language-typescript">const multBy10 = (a: number): number =&gt; a * 10;
 const increment = (a: number): number =&gt; a + 1;
@@ -239,7 +223,7 @@ composedFn(1); // 20
 <p>You will notice that the order is different. With <code>flow</code>, we can read from left to right, while with traditional approach we would have to read from the inside out.</p>
 <pre><code class="language-typescript">flow(a, b, c)(1) === c(b(a(1)));
 </code></pre>
-<h3><a class="header" href="#pipe" id="pipe">Pipe</a></h3>
+<h3 id="pipe"><a class="header" href="#pipe">Pipe</a></h3>
 <p>Pipe is very similar to flow, the only difference is that the first value <code>pipe</code> takes is the value itself, which is then applied to a composition of an arbitrary number of functions.</p>
 <pre><code class="language-typescript">pipe(
   value, // value
@@ -256,7 +240,7 @@ composedFn(1); // 20
 const result = pipe(1, increment, multBy10); // 20
 </code></pre>
 <p>If we ever need to add an additional function, we just need to insert it in this &quot;pipeline&quot; of tranformations, compared to nested function calls where we'd need to mess with parentheses as well.</p>
-<h3><a class="header" href="#currying" id="currying">Currying</a></h3>
+<h3 id="currying"><a class="header" href="#currying">Currying</a></h3>
 <p>As we've seen, <code>flow</code> returns a function that further expects it's argument; it's <em>curried</em>.</p>
 <p>Curried functions are functions which don't accept all of their arguments at once, instead they accept it one argument at a time, each time returning a new function. Some languages like Haskell and Elm don't even have a notion of multi-argument functions, <em>all</em> functions are automatically curried. This provides an important benefit - <em>partial application</em></p>
 <p>We'll often write functions that return new functions in the following style:</p>
@@ -269,7 +253,7 @@ const result = pipe(1, increment, multBy10); // 20
 // instead of
 const add3Numbers_ = (a: number, b: number, c: number): number =&gt; a + b + c;
 </code></pre>
-<h3><a class="header" href="#apply" id="apply">Apply</a></h3>
+<h3 id="apply"><a class="header" href="#apply">Apply</a></h3>
 <p>We've seen an example where inside <code>pipe</code> every step produces a new value, which is then fed into the next function. This is very straightforward when we're dealing with single argument functions, but let's see an example how this would work when we introduce multi argument functions in the mix.</p>
 <pre><code class="language-typescript">const result = pipe(
   1,
@@ -292,10 +276,10 @@ const result = pipe(
   apply(100) // 150
 );
 </code></pre>
-<h1><a class="header" href="#option" id="option">Option</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="option"><a class="header" href="#option">Option</a></h1>
 <p>There is a common concept in programming that is often a source of many bugs, and that's a concept of a <em>missing</em> value. Many programming languages use <a href="https://www.infoq.com/presentations/Null%2DReferences%2DThe%2DBillion%2DDollar%2DMistake%2DTony%2DHoare/">null</a> to represent this state, and some like JavaScript also use <code>undefined</code>. In case of JavaScript, these 2 account for 8 of 10 <a href="https://www.rollbar.com/blog/blog/top%2D10%2Djavascript%2Derrors%2Dfrom%2D1000%2Dprojects%2Dand%2Dhow%2Dto%2Davoid%2Dthem">most common errors</a> found in production.</p>
 <!-- We'll look how deeper into functional programming patterns, specifically `Option` monad, that can help us control this behaviour in a more safe, predictable and maintainable way.  -->
-<h2><a class="header" href="#nullable-types" id="nullable-types">Nullable types</a></h2>
+<h2 id="nullable-types"><a class="header" href="#nullable-types">Nullable types</a></h2>
 <p>We can get some type safety by returning nullable types and using optional chaining operator. If an expression can return some type <code>A</code> or <code>null</code>, we can ensure that the return type of the expression is <code>A | null</code> thus forcing us to check and narrow down the type before use.</p>
 <pre><code class="language-typescript">const result = Math.random() &gt; 0.5 ? { nested: { value: 1 } } : null
 // { nested: { value: number } } | null
@@ -329,7 +313,7 @@ declare function countLetters(name: string): number;
 <pre><code class="language-typescript">declare function formatName(name: Nullable&lt;string&gt;): Nullable&lt;string&gt;;
 </code></pre>
 <p>Of course, now we've created another problem because we have to do the same to <code>countLetters</code> and any other function in this chain, making our code a lot less type safe and we've also increased function coupling. Type signature of <code>formatName</code> shouldn't reflect possibly missing data, that's the concern of <code>getName</code> function.</p>
-<h2><a class="header" href="#option-1" id="option-1">Option</a></h2>
+<h2 id="option-1"><a class="header" href="#option-1">Option</a></h2>
 <p>We can take a slightly different approach and create a container for an optional value using discriminated unions:</p>
 <pre><code class="language-typescript">type None = {
   readonly _tag: &quot;None&quot;;
@@ -422,12 +406,12 @@ O.toUndefined(O.some(&quot;hello&quot;)) // &quot;hello&quot;
 O.toUndefined(O.none)) // undefined
 </code></pre>
 <p>So far, we've managed to create a specialized container, create some helper constructors and guards and a pattern matching tool. We will now build on this by making our <code>Option</code> a <code>Functor</code>!</p>
-<h1><a class="header" href="#excercises" id="excercises">Excercises</a></h1>
+<h1 id="excercises"><a class="header" href="#excercises">Excercises</a></h1>
 <ol>
 <li>Create a function <code>isValidName</code> which when supplied with a name of type <code>string</code>, returns a <code>Some</code> instance only when <code>name</code> is longer than 2 characters, otherwise it returns <code>None</code></li>
 <li>Create a function <code>greetUser</code> that, using previously defined function <code>isValidName</code>, checks whether a name is valid, if it is returns <code>Welcome, ${name}, you have a great name!</code>, otherwise returns <code>Hey there, isn't your name a bit short?</code></li>
 </ol>
-<h1><a class="header" href="#either" id="either">Either</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="either"><a class="header" href="#either">Either</a></h1>
 <pre><code class="language-javascript">const foo = 1
 conat bar = () =&gt; foo() + 3
 </code></pre>
@@ -478,8 +462,9 @@ type Some&lt;A&gt; = {
 
 type Option&lt;A&gt; = None | Some&lt;A&gt;;
 </code></pre>
-<h1><a class="header" href="#functor" id="functor">Functor</a></h1>
-<h2><a class="header" href="#option-2" id="option-2">Option</a></h2>
+<p>foo.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="functor"><a class="header" href="#functor">Functor</a></h1>
+<h2 id="option-2"><a class="header" href="#option-2">Option</a></h2>
 <p>Scary sounding word but it only means that we are able to apply a function to a value inside our <code>Option</code>. You are already familiar with some data structures that are also functors, <code>Array</code> for example, so it's no surprise that we need a function called <code>map</code> in order make our <code>Option</code> a functor</p>
 <pre><code class="language-typescript">const map =
   &lt;A, B&gt;(f: (a: A) =&gt; B) =&gt;
@@ -514,59 +499,31 @@ const result = pipe(
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
-
-                        
-
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
-
-                
             </nav>
 
         </div>
 
-        
-
-        
-
-        
-        
-        
         <script type="text/javascript">
-            window.playpen_copyable = true;
+            window.playground_copyable = true;
         </script>
-        
-
-        
-
-        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
-
-        
-        
         <script type="text/javascript">
         window.addEventListener('load', function() {
             window.setTimeout(window.print, 100);
         });
         </script>
-        
-        
-
     </body>
 </html>
