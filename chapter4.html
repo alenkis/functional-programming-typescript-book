@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="custom.css">
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -75,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Foreword</a></li><li class="chapter-item expanded affix "><a href="FOO.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter2.html"><strong aria-hidden="true">1.</strong> Functional composition</a></li><li class="chapter-item expanded affix "><li class="part-title">Algebraic data types</li><li class="chapter-item expanded "><a href="chapter3.html"><strong aria-hidden="true">2.</strong> Option</a></li><li class="chapter-item expanded "><a href="chapter4.html" class="active"><strong aria-hidden="true">3.</strong> Either</a></li><li class="chapter-item expanded affix "><li class="part-title">Typeclasses</li><li class="chapter-item expanded "><a href="chapter5.html"><strong aria-hidden="true">4.</strong> Functor</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Foreword</a></li><li class="chapter-item expanded "><a href="chapter1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="chapter2.html"><strong aria-hidden="true">2.</strong> Functional composition</a></li><li class="chapter-item expanded affix "><li class="part-title">Algebraic data types</li><li class="chapter-item expanded "><a href="chapter3.html"><strong aria-hidden="true">3.</strong> Option</a></li><li class="chapter-item expanded "><a href="chapter4.html" class="active"><strong aria-hidden="true">4.</strong> Either</a></li><li class="chapter-item expanded affix "><li class="part-title">Typeclasses</li><li class="chapter-item expanded "><a href="chapter5.html"><strong aria-hidden="true">5.</strong> Functor</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -138,57 +139,6 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="either"><a class="header" href="#either">Either</a></h1>
-<pre><code class="language-javascript">const foo = 1
-conat bar = () =&gt; foo() + 3
-</code></pre>
-<pre><code class="language-typescript">const foo: number = 1;
-const bar = (): number =&gt; foo() + 3;
-</code></pre>
-<pre><code class="language-ts">const foo: number = 1;
-const bar = (): number =&gt; foo() + 3;
-</code></pre>
-<pre><code class="language-javascript">const foo: number = 2;
-const bar = (): number =&gt; foo() + 3;
-</code></pre>
-<pre><code class="language-purescript">const foo: number = 2;
-const bar = (): number =&gt; foo() + 3;
-</code></pre>
-<pre><code class="language-haskell">foo x y = x + y
-</code></pre>
-<pre><code>type None = {
-  readonly _tag: &quot;None&quot;;
-};
-
-type Some&lt;A&gt; = {
-  readonly _tag: &quot;Some&quot;;
-  readonly value: A;
-};
-
-type Option&lt;A&gt; = None | Some&lt;A&gt;;
-</code></pre>
-<pre><code class="language-js">type None = {
-  readonly _tag: &quot;None&quot;;
-};
-
-type Some&lt;A&gt; = {
-  readonly _tag: &quot;Some&quot;;
-  readonly value: A;
-};
-
-type Option&lt;A&gt; = None | Some&lt;A&gt;;
-</code></pre>
-<pre><code class="language-ts">type None = {
-  readonly _tag: &quot;None&quot;;
-};
-
-type Some&lt;A&gt; = {
-  readonly _tag: &quot;Some&quot;;
-  readonly value: A;
-};
-
-type Option&lt;A&gt; = None | Some&lt;A&gt;;
-</code></pre>
-<p>foo.</p>
 
                     </main>
 
