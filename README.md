@@ -4,7 +4,7 @@ This book is a reference and a training material for using Typescript in a funct
 
 ## Setup
 
-You can read this book [here](www.todo.com), but if you also choose to solve excercises, it will be convenient to clone the repo:
+You can read this book [here](https://alenkis.github.io/functional-programming-typescript-book), but if you also choose to solve excercises, it will be convenient to clone the repo:
 
 ```sh
 git clone git@github.com:alenkis/functional-programming-typescript-book.git --branch no-solutions && cd functional-programming-typescript-book
