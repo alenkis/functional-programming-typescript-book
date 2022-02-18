@@ -1,4 +1,4 @@
-[Foreword](../README.md)
+[Foreword](foreword.md)
 
 - [Introduction](chapter1.md)
 - [Functional composition](chapter2.md)
