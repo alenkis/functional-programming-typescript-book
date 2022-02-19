@@ -139,6 +139,105 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="either"><a class="header" href="#either">Either</a></h1>
+<p>In the last chapter we've introduced a pattern for dealing with missing values and failed computations, <code>Option</code>. Unfortunately, <code>Option</code> can only tell us that there <em>is</em> a missing value (by returning <code>None</code>), but it can't tell us <em>why</em> is that the case. If we wanted to capture this additional context, we need another abstraction, <code>Either</code>.</p>
+<p>We can define it as:</p>
+<pre><code class="language-ts">type Left&lt;E&gt; = {
+  readonly _tag: &quot;Left&quot;;
+  readonly left: E;
+};
+
+type Right&lt;A&gt; = {
+  readonly _tag: &quot;Right&quot;;
+  readonly left: A;
+};
+
+type Either&lt;E, A&gt; = Left&lt;E&gt; | Right&lt;A&gt;;
+</code></pre>
+<p>Using tagged union pattern, we can now assign data to both branches, <em>left</em> and <em>right</em>. By convention, <em>left</em> represents a failure and <em>right</em> represents a successful outcome (right, correct).</p>
+<h2 id="why-not-throw"><a class="header" href="#why-not-throw">Why not throw?</a></h2>
+<p>A common pattern in the case of failures is to throw an exception which is then (hopefully) caught somewhere in the stack.</p>
+<pre><code class="language-ts">const validateInput = (input: string): boolean =&gt; {
+  if (!input) {
+    throw new Error(&quot;Input should not be empty&quot;);
+  }
+
+  return input.length &gt; 5;
+};
+</code></pre>
+<p>The problem with this approach is that it makes the function impure, it performs a side effect. This makes it harder to test because it doesn't only return values. It also <em>shifts</em> the burden of handling this error outwards, possibly many levels of abstraction higher, so this reduces our ability to reason about this code locally.</p>
+<p>We can instead use <code>Either</code> return the data that <em>represents</em> the error.</p>
+<pre><code class="language-ts">const validateInput = (input: string): Either&lt;Error, boolean&gt; =&gt;
+  input
+    ? right(input.length &gt; 5)
+    : left(new Error(&quot;Input should not be empty&quot;));
+</code></pre>
+<p>This version is also more informative; its return type describes what it does more closely.</p>
+<h2 id="constructors-and-guards"><a class="header" href="#constructors-and-guards">Constructors and guards</a></h2>
+<pre><code class="language-ts">// constructors
+const left = &lt;E = never, A = never&gt;(e: E): Either&lt;E, A&gt; =&gt; ({
+  _tag: &quot;Left&quot;,
+  left: e,
+});
+const right = &lt;E = never, A = never&gt;(a: A): Either&lt;E, A&gt; =&gt; ({
+  _tag: &quot;Right&quot;,
+  right: a,
+});
+
+// guards
+const isLeft = &lt;E, A&gt;(ma: Either&lt;E, A&gt;): ma is Left&lt;E&gt; =&gt; ma._tag === &quot;Left&quot;;
+const isRight = &lt;E, A&gt;(ma: Either&lt;E, A&gt;): ma is Right&lt;A&gt; =&gt; ma._tag === &quot;Right&quot;;
+</code></pre>
+<p>Similar to what we've seen with <code>Option</code>, by having these low level constructors and guards we can now construct <code>fromPredicate</code> and <code>match</code> functions:</p>
+<pre><code class="language-ts">// Constructs a Right instance if predicate returns true, otherwise returns Left
+const fromPredicate =
+  &lt;E, A&gt;(predicate: (a: A) =&gt; boolean, onLeft: (a: A) =&gt; E) =&gt;
+  (value: A): Either&lt;E, A&gt; =&gt;
+    predicate(value) ? right(value) : left(onLeft(a));
+
+fromPredicate(
+  (n) =&gt; n &gt; 5,
+  (n) =&gt; `${n} was NOT greater than 5`
+)(1); // Left&lt;number&gt;
+fromPredicate(
+  (n) =&gt; n &gt; 5,
+  (n) =&gt; `${n} was NOT greater than 5`
+)(6); // Right&lt;number&gt;
+</code></pre>
+<p><code>fromPredicate</code> is very similar to the one used with <code>Option</code>, the only difference being that it needs additional input argument, <code>onLeft</code>, a function that will create a value we can attach to <code>Left</code> instance</p>
+<h2 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern matching</a></h2>
+<pre><code class="language-ts">// Evaluates appropriate handler based on whether an Option is Some or None
+const match =
+  &lt;E, A, C&gt;(onLeft: (e: E) =&gt; B, onRight: (a: A) =&gt; C) =&gt;
+  (ma: Either&lt;E, A&gt;) =&gt;
+    isLeft(ma) ? onLeft(ma.left) : onRight(ma.right);
+
+pipe(
+  left(&quot;failed to fetch&quot;),
+  match(
+    (errorMessage) =&gt; `error: ${errorMessage}`,
+    (result) =&gt; result + 1
+  )
+); // &quot;error: failed to fetch&quot;
+
+pipe(
+  right(100),
+  match(
+    (errorMessage) =&gt; `error: ${errorMessage}`,
+    (result) =&gt; result + 1
+  )
+); // 101
+</code></pre>
+<p><code>match</code> is also very similar, the only difference is that <code>onLeft</code> handler now &quot;holds&quot; a value because <code>Left</code> instance is parametricized by a type (<code>Left&lt;E&gt;</code>), compared to <code>None</code> which cannot hold any value.</p>
+<p>In fact, all af the helpers we've defined for <code>Option</code> can be defined for <code>Either</code> as well, with the main difference of having to provide a value for <code>Left</code> instance. Implementation of these methods will be left as an exercise for reader.</p>
+<h1 id="exercises"><a class="header" href="#exercises">Exercises</a></h1>
+<ol>
+<li>
+<p>Create a helper <code>fromNullable</code> which takes a default value and and a nullable value and returns an <code>Either</code></p>
+</li>
+<li>
+<p>Create a function <code>parseString</code> which takes a parsing <code>pattern</code> and an <code>input</code> string. If the <code>input</code> starts with the <code>pattern</code>, return <code>Right</code> instance holding <em>the rest</em> of the string (unconsumed portion). If the <code>input</code> doesn't start with the <code>pattern</code>, return <code>Left</code> instance with a message &quot;could not parse&quot;</p>
+</li>
+</ol>
 
                     </main>
 

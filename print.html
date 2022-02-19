@@ -301,19 +301,19 @@ if (checkedValue) {
 <li>we are forced to use <code>if</code> statements which are brittle, poorly legible and can lead to some complex states</li>
 <li>it's harder to compose functions</li>
 </ul>
-<p>What do I mean by harder function composition? Consider the following example of functions (whose implementation doesn't matter, but their types do):</p>
+<p>Consider the following example of functions (whose implementation doesn't matter, but their types do):</p>
 <pre><code class="language-typescript">declare function getName(id: string): Nullable&lt;string&gt;;
 declare function formatName(name: string): string;
 declare function countLetters(name: string): number;
 </code></pre>
-<p><code>getName</code> can possibly fail, and so we return a <code>Nullable&lt;string&gt;</code> (<code>string</code> | <code>null</code>). The problem arises if we try to combine this functions with others like this:</p>
+<p><code>getName</code> can possibly fail, and so we return a <code>Nullable&lt;string&gt;</code> (<code>string</code> | <code>null</code>). The problem arises if we try to combine this function with others like this:</p>
 <pre><code class="language-typescript">pipe(&quot;id&quot;, getName, formatName, countLetters);
 //                  ^-- type `null` is not assignable to type `string`
 </code></pre>
 <p>We get an error <em>type <code>null</code> is not assignable to type <code>string</code></em>. We now have to introduce manual checking with <code>if</code> statements which leads to decreased readability. If the functions are used a lot, in order to avoid this boilerplate we might be tempted to handle this check inside <code>formatName</code> function and decide to rewrite it as:</p>
 <pre><code class="language-typescript">declare function formatName(name: Nullable&lt;string&gt;): Nullable&lt;string&gt;;
 </code></pre>
-<p>Of course, now we've created another problem because we have to do the same to <code>countLetters</code> and any other function in this chain, making our code a lot less type safe and we've also increased function coupling. Type signature of <code>formatName</code> shouldn't reflect possibly missing data, that's the concern of <code>getName</code> function.</p>
+<p>Of course, now we've created another problem because we have to do the same to <code>countLetters</code> and any other function in this chain, making our code a lot less type safe. We've also increased coupling between these functions. Type signature of <code>formatName</code> shouldn't reflect possibly missing data, that's the concern of <code>getName</code> function.</p>
 <h2 id="option-1"><a class="header" href="#option-1">Option</a></h2>
 <p>We can take a slightly different approach and create a container for an optional value using discriminated unions:</p>
 <pre><code class="language-typescript">type None = {
@@ -327,7 +327,7 @@ type Some&lt;A&gt; = {
 
 type Option&lt;A&gt; = None | Some&lt;A&gt;;
 </code></pre>
-<p>Even though this looks very similar to a plain union like we've used with <code>Nullable</code>, this approach will allow us to build some very powerful abstractions that will allow us to reason about our code on a higher level.</p>
+<p>We use <code>_tag</code> field for comparison (<em>&quot;discrimination&quot;</em>) between the types <code>None</code> and <code>Some</code>. This pattern is also sometimes called <em>tagged union</em> because we can use literal values of the &quot;tag&quot; to narrow down our type. Even though this looks very similar to a plain union like we've used with <code>Nullable</code>, this approach will allow us to build some very powerful abstractions that will allow us to reason about our code on a higher level.</p>
 <p>We also need a way how to create <code>Option</code>s and check which variant we have, <code>Some</code> or <code>None</code>.</p>
 <pre><code class="language-typescript">// constructors
 const some = &lt;A&gt;(a: A): Option&lt;A&gt; =&gt; ({ _tag: &quot;Some&quot;, value: a });
@@ -370,7 +370,7 @@ const match =
 ); // string
 </code></pre>
 <p>We cannot decide <em>not</em> to handle both cases, that would be a type error.</p>
-<p>Sometimes we just want to handle extract the value in case of <code>Some</code>, and handle the <code>None</code> case. We could do this with <code>match</code>, but we can also use <code>getOrElse</code> and <code>getOrElseW</code></p>
+<p>Sometimes we just want to extract the value in case of <code>Some</code>, and handle the <code>None</code> case with some default value. We could do this with <code>match</code>, but we can also use <code>getOrElse</code> and <code>getOrElseW</code></p>
 <pre><code class="language-typescript">pipe(
   someOption,
   match(
@@ -387,7 +387,7 @@ pipe(
   O.getOrElse(() =&gt; 1)
 );
 </code></pre>
-<p>Both <code>match</code> and <code>getOrElse</code> need to return the same type from both branches, so that the resulting value is a single type. We can also <em>widen</em> the result by using <code>getOrElseW</code>. In <code>fp-ts</code>, <code>W</code> suffix means <em>widen</em> and functions that end with <code>W</code> aggregate types from different branches into a type union</p>
+<p>Both <code>match</code> and <code>getOrElse</code> need to return the same type from both branches, so that the resulting value is of a single type. We can also <em>widen</em> the result by using <code>getOrElseW</code>. In <code>fp-ts</code>, <code>W</code> suffix means <em>widen</em> and functions that end with <code>W</code> aggregate types from different branches into a type union</p>
 <pre><code class="language-typescript">const result = pipe(
   O.some(1),
   O.getOrElseW(() =&gt; &quot;hello&quot;)
@@ -406,13 +406,116 @@ O.toNullable(O.none)) // null
 O.toUndefined(O.some(&quot;hello&quot;)) // &quot;hello&quot;
 O.toUndefined(O.none)) // undefined
 </code></pre>
-<p>So far, we've managed to create a specialized container, create some helper constructors and guards and a pattern matching tool. We will now build on this by making our <code>Option</code> a <code>Functor</code>!</p>
-<h1 id="excercises"><a class="header" href="#excercises">Excercises</a></h1>
+<p>So far, we've managed to create a specialized container, created some helper constructors, guards and a pattern matching tool. We are able to create <code>Option</code> from values, pattern match against it and destructure its value. Later, we will see how <code>Option</code> can have even more interesting behaviour.</p>
+<h1 id="exercises"><a class="header" href="#exercises">Exercises</a></h1>
 <ol>
-<li>Create a function <code>isValidName</code> which when supplied with a name of type <code>string</code>, returns a <code>Some</code> instance only when <code>name</code> is longer than 2 characters, otherwise it returns <code>None</code></li>
-<li>Create a function <code>greetUser</code> that, using previously defined function <code>isValidName</code>, checks whether a name is valid, if it is returns <code>Welcome, ${name}, you have a great name!</code>, otherwise returns <code>Hey there, isn't your name a bit short?</code></li>
+<li>
+<p>Create a function <code>isValidName</code> which when supplied with a name of type <code>string</code>, returns a <code>Some</code> instance only when <code>name</code> is longer than 2 characters, otherwise it returns <code>None</code></p>
+</li>
+<li>
+<p>Create a function <code>greetUser</code> that, using previously defined function <code>isValidName</code>, checks whether a name is valid, and if it is, returns <code>Welcome, ${name}, you have a great name!</code>, otherwise returns <code>Hey there, isn't your name a bit short?</code></p>
+</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="either"><a class="header" href="#either">Either</a></h1>
+<p>In the last chapter we've introduced a pattern for dealing with missing values and failed computations, <code>Option</code>. Unfortunately, <code>Option</code> can only tell us that there <em>is</em> a missing value (by returning <code>None</code>), but it can't tell us <em>why</em> is that the case. If we wanted to capture this additional context, we need another abstraction, <code>Either</code>.</p>
+<p>We can define it as:</p>
+<pre><code class="language-ts">type Left&lt;E&gt; = {
+  readonly _tag: &quot;Left&quot;;
+  readonly left: E;
+};
+
+type Right&lt;A&gt; = {
+  readonly _tag: &quot;Right&quot;;
+  readonly left: A;
+};
+
+type Either&lt;E, A&gt; = Left&lt;E&gt; | Right&lt;A&gt;;
+</code></pre>
+<p>Using tagged union pattern, we can now assign data to both branches, <em>left</em> and <em>right</em>. By convention, <em>left</em> represents a failure and <em>right</em> represents a successful outcome (right, correct).</p>
+<h2 id="why-not-throw"><a class="header" href="#why-not-throw">Why not throw?</a></h2>
+<p>A common pattern in the case of failures is to throw an exception which is then (hopefully) caught somewhere in the stack.</p>
+<pre><code class="language-ts">const validateInput = (input: string): boolean =&gt; {
+  if (!input) {
+    throw new Error(&quot;Input should not be empty&quot;);
+  }
+
+  return input.length &gt; 5;
+};
+</code></pre>
+<p>The problem with this approach is that it makes the function impure, it performs a side effect. This makes it harder to test because it doesn't only return values. It also <em>shifts</em> the burden of handling this error outwards, possibly many levels of abstraction higher, so this reduces our ability to reason about this code locally.</p>
+<p>We can instead use <code>Either</code> return the data that <em>represents</em> the error.</p>
+<pre><code class="language-ts">const validateInput = (input: string): Either&lt;Error, boolean&gt; =&gt;
+  input
+    ? right(input.length &gt; 5)
+    : left(new Error(&quot;Input should not be empty&quot;));
+</code></pre>
+<p>This version is also more informative; its return type describes what it does more closely.</p>
+<h2 id="constructors-and-guards"><a class="header" href="#constructors-and-guards">Constructors and guards</a></h2>
+<pre><code class="language-ts">// constructors
+const left = &lt;E = never, A = never&gt;(e: E): Either&lt;E, A&gt; =&gt; ({
+  _tag: &quot;Left&quot;,
+  left: e,
+});
+const right = &lt;E = never, A = never&gt;(a: A): Either&lt;E, A&gt; =&gt; ({
+  _tag: &quot;Right&quot;,
+  right: a,
+});
+
+// guards
+const isLeft = &lt;E, A&gt;(ma: Either&lt;E, A&gt;): ma is Left&lt;E&gt; =&gt; ma._tag === &quot;Left&quot;;
+const isRight = &lt;E, A&gt;(ma: Either&lt;E, A&gt;): ma is Right&lt;A&gt; =&gt; ma._tag === &quot;Right&quot;;
+</code></pre>
+<p>Similar to what we've seen with <code>Option</code>, by having these low level constructors and guards we can now construct <code>fromPredicate</code> and <code>match</code> functions:</p>
+<pre><code class="language-ts">// Constructs a Right instance if predicate returns true, otherwise returns Left
+const fromPredicate =
+  &lt;E, A&gt;(predicate: (a: A) =&gt; boolean, onLeft: (a: A) =&gt; E) =&gt;
+  (value: A): Either&lt;E, A&gt; =&gt;
+    predicate(value) ? right(value) : left(onLeft(a));
+
+fromPredicate(
+  (n) =&gt; n &gt; 5,
+  (n) =&gt; `${n} was NOT greater than 5`
+)(1); // Left&lt;number&gt;
+fromPredicate(
+  (n) =&gt; n &gt; 5,
+  (n) =&gt; `${n} was NOT greater than 5`
+)(6); // Right&lt;number&gt;
+</code></pre>
+<p><code>fromPredicate</code> is very similar to the one used with <code>Option</code>, the only difference being that it needs additional input argument, <code>onLeft</code>, a function that will create a value we can attach to <code>Left</code> instance</p>
+<h2 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern matching</a></h2>
+<pre><code class="language-ts">// Evaluates appropriate handler based on whether an Option is Some or None
+const match =
+  &lt;E, A, C&gt;(onLeft: (e: E) =&gt; B, onRight: (a: A) =&gt; C) =&gt;
+  (ma: Either&lt;E, A&gt;) =&gt;
+    isLeft(ma) ? onLeft(ma.left) : onRight(ma.right);
+
+pipe(
+  left(&quot;failed to fetch&quot;),
+  match(
+    (errorMessage) =&gt; `error: ${errorMessage}`,
+    (result) =&gt; result + 1
+  )
+); // &quot;error: failed to fetch&quot;
+
+pipe(
+  right(100),
+  match(
+    (errorMessage) =&gt; `error: ${errorMessage}`,
+    (result) =&gt; result + 1
+  )
+); // 101
+</code></pre>
+<p><code>match</code> is also very similar, the only difference is that <code>onLeft</code> handler now &quot;holds&quot; a value because <code>Left</code> instance is parametricized by a type (<code>Left&lt;E&gt;</code>), compared to <code>None</code> which cannot hold any value.</p>
+<p>In fact, all af the helpers we've defined for <code>Option</code> can be defined for <code>Either</code> as well, with the main difference of having to provide a value for <code>Left</code> instance. Implementation of these methods will be left as an exercise for reader.</p>
+<h1 id="exercises-1"><a class="header" href="#exercises-1">Exercises</a></h1>
+<ol>
+<li>
+<p>Create a helper <code>fromNullable</code> which takes a default value and and a nullable value and returns an <code>Either</code></p>
+</li>
+<li>
+<p>Create a function <code>parseString</code> which takes a parsing <code>pattern</code> and an <code>input</code> string. If the <code>input</code> starts with the <code>pattern</code>, return <code>Right</code> instance holding <em>the rest</em> of the string (unconsumed portion). If the <code>input</code> doesn't start with the <code>pattern</code>, return <code>Left</code> instance with a message &quot;could not parse&quot;</p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="functor"><a class="header" href="#functor">Functor</a></h1>
 <h2 id="option-2"><a class="header" href="#option-2">Option</a></h2>
 <p>Scary sounding word but it only means that we are able to apply a function to a value inside our <code>Option</code>. You are already familiar with some data structures that are also functors, <code>Array</code> for example, so it's no surprise that we need a function called <code>map</code> in order make our <code>Option</code> a functor</p>
