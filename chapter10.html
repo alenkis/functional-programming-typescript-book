@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Functor - Functional Programming in Typescript</title>
+        <title>Monoid - Functional Programming in Typescript</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="foreword.html">Foreword</a></li><li class="chapter-item expanded "><a href="chapter1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="chapter2.html"><strong aria-hidden="true">2.</strong> Functional composition</a></li><li class="chapter-item expanded affix "><li class="part-title">Algebraic data types</li><li class="chapter-item expanded "><a href="chapter3.html"><strong aria-hidden="true">3.</strong> Option</a></li><li class="chapter-item expanded "><a href="chapter4.html"><strong aria-hidden="true">4.</strong> Either</a></li><li class="chapter-item expanded affix "><li class="part-title">Typeclasses</li><li class="chapter-item expanded "><a href="chapter5.html" class="active"><strong aria-hidden="true">5.</strong> Functor</a></li><li class="chapter-item expanded "><a href="chapter6.html"><strong aria-hidden="true">6.</strong> Applicative</a></li><li class="chapter-item expanded "><a href="chapter7.html"><strong aria-hidden="true">7.</strong> Alternative</a></li><li class="chapter-item expanded "><a href="chapter8.html"><strong aria-hidden="true">8.</strong> Monad</a></li><li class="chapter-item expanded "><a href="chapter9.html"><strong aria-hidden="true">9.</strong> Semigroup</a></li><li class="chapter-item expanded "><a href="chapter10.html"><strong aria-hidden="true">10.</strong> Monoid</a></li><li class="chapter-item expanded "><a href="chapter11.html"><strong aria-hidden="true">11.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="chapter12.html"><strong aria-hidden="true">12.</strong> Traversable</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="foreword.html">Foreword</a></li><li class="chapter-item expanded "><a href="chapter1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="chapter2.html"><strong aria-hidden="true">2.</strong> Functional composition</a></li><li class="chapter-item expanded affix "><li class="part-title">Algebraic data types</li><li class="chapter-item expanded "><a href="chapter3.html"><strong aria-hidden="true">3.</strong> Option</a></li><li class="chapter-item expanded "><a href="chapter4.html"><strong aria-hidden="true">4.</strong> Either</a></li><li class="chapter-item expanded affix "><li class="part-title">Typeclasses</li><li class="chapter-item expanded "><a href="chapter5.html"><strong aria-hidden="true">5.</strong> Functor</a></li><li class="chapter-item expanded "><a href="chapter6.html"><strong aria-hidden="true">6.</strong> Applicative</a></li><li class="chapter-item expanded "><a href="chapter7.html"><strong aria-hidden="true">7.</strong> Alternative</a></li><li class="chapter-item expanded "><a href="chapter8.html"><strong aria-hidden="true">8.</strong> Monad</a></li><li class="chapter-item expanded "><a href="chapter9.html"><strong aria-hidden="true">9.</strong> Semigroup</a></li><li class="chapter-item expanded "><a href="chapter10.html" class="active"><strong aria-hidden="true">10.</strong> Monoid</a></li><li class="chapter-item expanded "><a href="chapter11.html"><strong aria-hidden="true">11.</strong> Foldable</a></li><li class="chapter-item expanded "><a href="chapter12.html"><strong aria-hidden="true">12.</strong> Traversable</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -138,82 +138,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="functor"><a class="header" href="#functor">Functor</a></h1>
-<p>A <code>Functor</code> is a type constructor that supports mapping operation. The name comes from mathematics, specifically category theory. If it was invented in the context of programming, it might have been called <code>Mappable</code>.</p>
-<p>Mapping operation allows us to apply a function inside a generic type without changing its structure. This sounds very familiar, and in fact many common data structures <em>are</em> functors, for example <code>Array</code>. It's <code>map</code> function allows us to apply function to values inside the container without changing it's structure - the result is still an array of the same size.</p>
-<pre><code class="language-ts">type MappingFn&lt;A, B&gt; = (a: A) =&gt; B;
-
-const numberToString: MappingFn&lt;number, string&gt; = (a) =&gt; a.toString();
-
-[1, 2, 3].map(numberToString); // [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]
-</code></pre>
-<p>We can implement the same operation for <code>Option</code> and <code>Either</code></p>
-<h2 id="option"><a class="header" href="#option">Option</a></h2>
-<pre><code class="language-typescript">const map =
-  &lt;A, B&gt;(f: (a: A) =&gt; B) =&gt;
-  (fa: Option&lt;A&gt;): Option&lt;B&gt; =&gt;
-    isNone(fa) ? none : some(f(fa.value));
-</code></pre>
-<p><code>map</code> takes two arguments (curried)</p>
-<ul>
-<li>a function <code>f</code> that transforms some value (<code>A =&gt; B</code>)</li>
-<li>a Functor <code>fa</code> (&quot;Functor of type A&quot;), in our case <code>Option&lt;A&gt;</code></li>
-</ul>
-<p>if <code>fa</code>, our <code>Option</code> we're operating on, is <code>None</code>, then the result is also a <code>None</code> - we've essentially bypassed this operation and mapping function was not applied. If our <code>Option</code> is a <code>Some</code> instance, then we apply our function to it's underlying value. This gives us an ability to chain operations that can produce <code>None</code>, without worrying about manual value checking.</p>
-<p>We can refactor our nullable types example from <a href="chapter3.html#nullable-types">chapter 3</a> like this:</p>
-<pre><code class="language-typescript">declare function getName(id: string): Option&lt;string&gt;;
-declare function formatName(name: string): string;
-declare function countLetters(name: string): number;
-
-pipe(
-  &quot;id&quot;,
-  getName, // &lt;-- returns an Option&lt;string&gt;
-  map(formatName), // &lt;-- returns an Option&lt;string&gt;
-  map(countLetters), // &lt;-- returns an Option&lt;number&gt;
-  getOrElse(() =&gt; 0) // return the final value if `Some`, otherwise return 0
-); // number
-</code></pre>
-<p>We have used pure functions <code>formatName</code> and <code>countLetters</code> inside of a context of potentially missing value and we were able to decouple our functions. <code>map</code> lets us gradually build up the result while staying inside our <code>Option</code> container, all the while never needing to worry about a possibly missing state.</p>
-<h2 id="either"><a class="header" href="#either">Either</a></h2>
-<p>We can create <code>map</code> for <code>Either</code> as well:</p>
-<pre><code class="language-ts">const map =
-  &lt;A, B&gt;(f: (a: A) =&gt; B) =&gt;
-  &lt;E&gt;(fa: Either&lt;E, A&gt;): Either&lt;E, B&gt; =&gt;
-    isLeft(fa) ? fa : right(f(fa.right));
-</code></pre>
-<p>Implementation is very similar to <code>Option</code>, we are returning our <code>Either</code> instance unchanged if it's a <code>Left</code> instance, otherwise we are returning a new <code>Either</code> instance with its value now being a result of applying function <code>f</code> to the old value.</p>
-<p>Unlike <code>Option</code>, <code>Either</code> can also have a mapping operation over it's <code>Left</code> value. Implementing <code>mapLeft</code> will be left as an exercise for the reader.</p>
-<h2 id="functor-laws"><a class="header" href="#functor-laws">Functor laws</a></h2>
-<p>There are many more data types that have a <code>Functor</code> instance, in other words, that implement <code>map</code> operation. Unfortunately, Typescript can't support a single, polymorhphic function <code>map</code> that is able to operate on any functor instance, so each data needs to implement is own specialized version (like we did here for <code>Option</code> and <code>Either</code>).</p>
-<p>All of the instances need to obey functor laws, rules that guarantee that <code>map</code> operation produces sane functor instances. Data types that <code>fp-ts</code> exports already obey them, but they are useful to know if we decide to create custom data types with functor instance (and we will, later in the tutorial).</p>
-<ol>
-<li>
-<p><em>Identity law</em></p>
-<p>If we map the identity function over a container, the result should be the same unchanged container. <code>map</code> should not be applying any other changes or side effects, it should only apply the function.</p>
-<pre><code class="language-ts">map(fa, (a) =&gt; a) === fa;
-</code></pre>
-</li>
-<li>
-<p><em>Composition law</em></p>
-<p>This rules ensures composition of functions works properly for our functor instance. There should be no difference if we map over container <code>fa</code> using composed function <code>fg</code>, or if we we perform mapping with <code>f</code> and then with <code>g</code>.</p>
-<pre><code class="language-ts">const fg = flow(f, g); // composed function
-map(fa, (a) =&gt; fg(a)) === map(map(fa, f), g);
-</code></pre>
-</li>
-</ol>
-<h1 id="exercises"><a class="header" href="#exercises">Exercises</a></h1>
-<ol>
-<li>Create a <code>mapLeft</code> function for <code>Either</code> instances</li>
-</ol>
+                        <h1 id="monoid"><a class="header" href="#monoid">Monoid</a></h1>
+<p>Coming soon...</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="chapter4.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="chapter9.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="chapter6.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="chapter11.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -222,10 +157,10 @@ map(fa, (a) =&gt; fg(a)) === map(map(fa, f), g);
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="chapter4.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="chapter9.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="chapter6.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="chapter11.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
