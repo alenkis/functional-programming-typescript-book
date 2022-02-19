@@ -32,7 +32,7 @@ There are a couple of problems with this approach:
 - we are forced to use `if` statements which are brittle, poorly legible and can lead to some complex states
 - it's harder to compose functions
 
-What do I mean by harder function composition? Consider the following example of functions (whose implementation doesn't matter, but their types do):
+Consider the following example of functions (whose implementation doesn't matter, but their types do):
 
 ```typescript
 declare function getName(id: string): Nullable<string>;
@@ -40,7 +40,7 @@ declare function formatName(name: string): string;
 declare function countLetters(name: string): number;
 ```
 
-`getName` can possibly fail, and so we return a `Nullable<string>` (`string` | `null`). The problem arises if we try to combine this functions with others like this:
+`getName` can possibly fail, and so we return a `Nullable<string>` (`string` | `null`). The problem arises if we try to combine this function with others like this:
 
 ```typescript
 pipe("id", getName, formatName, countLetters);
@@ -53,7 +53,7 @@ We get an error _type `null` is not assignable to type `string`_. We now have to
 declare function formatName(name: Nullable<string>): Nullable<string>;
 ```
 
-Of course, now we've created another problem because we have to do the same to `countLetters` and any other function in this chain, making our code a lot less type safe and we've also increased function coupling. Type signature of `formatName` shouldn't reflect possibly missing data, that's the concern of `getName` function.
+Of course, now we've created another problem because we have to do the same to `countLetters` and any other function in this chain, making our code a lot less type safe. We've also increased coupling between these functions. Type signature of `formatName` shouldn't reflect possibly missing data, that's the concern of `getName` function.
 
 ## Option
 
@@ -72,7 +72,7 @@ type Some<A> = {
 type Option<A> = None | Some<A>;
 ```
 
-Even though this looks very similar to a plain union like we've used with `Nullable`, this approach will allow us to build some very powerful abstractions that will allow us to reason about our code on a higher level.
+We use `_tag` field for comparison (_"discrimination"_) between the types `None` and `Some`. This pattern is also sometimes called _tagged union_ because we can use literal values of the "tag" to narrow down our type. Even though this looks very similar to a plain union like we've used with `Nullable`, this approach will allow us to build some very powerful abstractions that will allow us to reason about our code on a higher level.
 
 We also need a way how to create `Option`s and check which variant we have, `Some` or `None`.
 
@@ -130,7 +130,7 @@ const result = pipe(
 
 We cannot decide _not_ to handle both cases, that would be a type error.
 
-Sometimes we just want to handle extract the value in case of `Some`, and handle the `None` case. We could do this with `match`, but we can also use `getOrElse` and `getOrElseW`
+Sometimes we just want to extract the value in case of `Some`, and handle the `None` case with some default value. We could do this with `match`, but we can also use `getOrElse` and `getOrElseW`
 
 ```typescript
 pipe(
@@ -152,7 +152,7 @@ pipe(
 );
 ```
 
-Both `match` and `getOrElse` need to return the same type from both branches, so that the resulting value is a single type. We can also _widen_ the result by using `getOrElseW`. In `fp-ts`, `W` suffix means _widen_ and functions that end with `W` aggregate types from different branches into a type union
+Both `match` and `getOrElse` need to return the same type from both branches, so that the resulting value is of a single type. We can also _widen_ the result by using `getOrElseW`. In `fp-ts`, `W` suffix means _widen_ and functions that end with `W` aggregate types from different branches into a type union
 
 ```typescript
 const result = pipe(
@@ -177,9 +177,10 @@ O.toUndefined(O.some("hello")) // "hello"
 O.toUndefined(O.none)) // undefined
 ```
 
-So far, we've managed to create a specialized container, create some helper constructors and guards and a pattern matching tool. We will now build on this by making our `Option` a `Functor`!
+So far, we've managed to create a specialized container, created some helper constructors, guards and a pattern matching tool. We are able to create `Option` from values, pattern match against it and destructure its value. Later, we will see how `Option` can have even more interesting behaviour.
 
 # Excercises
 
 1. Create a function `isValidName` which when supplied with a name of type `string`, returns a `Some` instance only when `name` is longer than 2 characters, otherwise it returns `None`
-2. Create a function `greetUser` that, using previously defined function `isValidName`, checks whether a name is valid, if it is returns `Welcome, ${name}, you have a great name!`, otherwise returns `Hey there, isn't your name a bit short?`
+
+2. Create a function `greetUser` that, using previously defined function `isValidName`, checks whether a name is valid, and if it is, returns `Welcome, ${name}, you have a great name!`, otherwise returns `Hey there, isn't your name a bit short?`
