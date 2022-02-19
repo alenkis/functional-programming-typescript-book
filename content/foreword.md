@@ -4,16 +4,16 @@ This book is a reference and a training material for using Typescript in a funct
 
 ## Setup
 
-You can read this book [here](https://alenkis.github.io/functional-programming-typescript-book), but if you also choose to solve excercises, it will be convenient to clone the repo:
+You can read this book [here](https://alenkis.github.io/functional-programming-typescript-book), but if you also choose to solve exercises, it will be convenient to clone the repo:
 
 ```sh
 git clone git@github.com:alenkis/functional-programming-typescript-book.git --branch no-solutions && cd functional-programming-typescript-book
 ```
 
-All the code is located in `/excercises` folder
+All the code is located in `/exercises` folder
 
 ```sh
-cd /excercises
+cd /exercises
 ```
 
 Install dependencies with:
@@ -25,7 +25,7 @@ yarn
 npm install
 ```
 
-For each chapter that contains excercises, you can solve them in TDD style by running tests with `yarn test:{chapterNumber}` and implementing the functions one by one.
+For each chapter that contains exercises, you can solve them in TDD style by running tests with `yarn test:{chapterNumber}` and implementing the functions one by one.
 
 ```sh
 yarn test:chapter3
