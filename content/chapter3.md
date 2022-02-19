@@ -179,7 +179,7 @@ O.toUndefined(O.none)) // undefined
 
 So far, we've managed to create a specialized container, created some helper constructors, guards and a pattern matching tool. We are able to create `Option` from values, pattern match against it and destructure its value. Later, we will see how `Option` can have even more interesting behaviour.
 
-# Excercises
+# Exercises
 
 1. Create a function `isValidName` which when supplied with a name of type `string`, returns a `Some` instance only when `name` is longer than 2 characters, otherwise it returns `None`
 
