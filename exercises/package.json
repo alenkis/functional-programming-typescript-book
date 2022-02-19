@@ -7,6 +7,7 @@
     "test:chapter2": "jest --watchAll --testPathPattern=chapter2",
     "test:chapter3": "jest --watchAll --testPathPattern=chapter3",
     "test:chapter4": "jest --watchAll --testPathPattern=chapter4",
+    "test:chapter5": "jest --watchAll --testPathPattern=chapter5",
     "test": "jest"
   },
   "keywords": [],
