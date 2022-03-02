@@ -7,7 +7,7 @@ describe("mapLeft", () => {
     const value = 1;
     const result = pipe(
       E.right(value),
-      mapLeft((x) => x + 1)
+      mapLeft((x: number) => x + 1)
     );
 
     expect(result).toEqualRight(value);
